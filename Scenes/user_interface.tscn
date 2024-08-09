@@ -1,26 +1,42 @@
-[gd_scene format=3 uid="uid://bsjam3w6nd1m5"]
+[gd_scene load_steps=2 format=3 uid="uid://bsjam3w6nd1m5"]
+
+[ext_resource type="Script" path="res://Scripts/toolbar.gd" id="1_hsntf"]
 
 [node name="UserInterface" type="CanvasLayer"]
 follow_viewport_enabled = true
 
-[node name="toolbar" type="HBoxContainer" parent="."]
-anchors_preset = 7
-anchor_left = 0.5
+[node name="toolbar_background" type="ColorRect" parent="."]
+anchors_preset = 12
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -97.5
-offset_top = -40.0
-offset_right = 97.5
+offset_top = -32.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 1
+mouse_force_pass_scroll_events = false
+color = Color(0.223529, 0.72549, 1, 0.192157)
 
-[node name="step_time_slider" type="HSlider" parent="toolbar"]
-custom_minimum_size = Vector2(120, 0)
+[node name="toolbar" type="HBoxContainer" parent="toolbar_background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+alignment = 1
+script = ExtResource("1_hsntf")
+
+[node name="step_time_slider" type="HSlider" parent="toolbar_background/toolbar"]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "Changes Speed of Simulation"
+mouse_filter = 1
 value = 16.0
 
-[node name="step_time_label" type="Label" parent="toolbar/step_time_slider"]
+[node name="step_time_label" type="Label" parent="toolbar_background/toolbar/step_time_slider"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -32,4 +48,9 @@ offset_right = 19.0
 offset_bottom = 11.5
 grow_horizontal = 0
 grow_vertical = 2
+mouse_filter = 1
 text = "16"
+
+[connection signal="mouse_entered" from="toolbar_background" to="toolbar_background/toolbar" method="_on_toolbar_background_mouse_entered"]
+[connection signal="mouse_exited" from="toolbar_background" to="toolbar_background/toolbar" method="_on_toolbar_background_mouse_exited"]
+[connection signal="value_changed" from="toolbar_background/toolbar/step_time_slider" to="toolbar_background/toolbar" method="_on_step_time_slider_value_changed"]

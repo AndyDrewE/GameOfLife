@@ -5,13 +5,11 @@ extends TileMap
 const TILE_SIZE = 16
 
 
-var step_time : int = 16
-
 @export var width : int
 @export var height : int
 
-var playing = false
-var able_to_place_tiles = true
+
+
 
 var temp_field
 
@@ -33,10 +31,10 @@ func _ready():
 
 func _input(event):
 	if event.is_action_pressed("ui_accept"):
-		playing = !playing
+		Global.playing = !Global.playing
 		
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed and able_to_place_tiles:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed and Global.ABLE_TO_PLACE:
 			var mouse_pos = (get_local_mouse_position()/TILE_SIZE).floor()
 			var clicked_cell_atlas = get_cell_atlas_coords(0, mouse_pos)
 			clicked_cell_atlas.x = (clicked_cell_atlas.x + 1) % 2
@@ -45,12 +43,12 @@ func _input(event):
 		
 
 func _process(delta):
-	if Engine.get_process_frames() % step_time == 0:
+	if Engine.get_process_frames() % Global.STEP_TIME == 0:
 		update_field()
 
 
 func update_field():
-	if !playing:
+	if !Global.playing:
 		return
 	
 	#adjust state in temp_field
@@ -79,7 +77,4 @@ func update_field():
 		for y in range(height):
 			set_cell(0, Vector2(x,y), 2, Vector2(temp_field[x][y], 0))
 
-func update_step_time(new_step_time : int):
-	if step_time != new_step_time:
-		step_time = new_step_time
 
