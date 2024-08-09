@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://dn565po4jo3ic"]
+
+[ext_resource type="Texture2D" uid="uid://yn24f4cqc52p" path="res://dead_alive_tiles.png" id="1_1g06j"]
+[ext_resource type="Script" path="res://Scenes/tiles.gd" id="2_a200k"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oug6p"]
+texture = ExtResource("1_1g06j")
+0:0/0 = 0
+1:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_botdv"]
+sources/2 = SubResource("TileSetAtlasSource_oug6p")
+
+[node name="main" type="Node2D"]
+
+[node name="tiles" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_botdv")
+format = 2
+script = ExtResource("2_a200k")
+width = 120
+height = 67
+
+[node name="Camera2D" type="Camera2D" parent="tiles"]

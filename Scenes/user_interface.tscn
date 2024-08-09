@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://3njhlba3t2vr"]
+
+[ext_resource type="Script" path="res://Scripts/user_interface.gd" id="1_du85t"]
+
+[node name="UserInterface" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_du85t")
+
+[node name="step_time_slider" type="VSlider" parent="."]
+layout_mode = 0
+offset_left = 935.0
+offset_top = 76.0
+offset_right = 951.0
+offset_bottom = 421.0
+tooltip_text = "Controls speed of simulation"
+min_value = 1.0
+value = 16.0
+
+[node name="step_time_slider_label" type="Label" parent="step_time_slider"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = -26.0
+offset_right = 17.0
+offset_bottom = -3.0
+text = "16"
+
+[connection signal="value_changed" from="step_time_slider" to="." method="_on_step_time_slider_value_changed"]
