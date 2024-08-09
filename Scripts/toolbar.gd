@@ -4,6 +4,7 @@ extends HBoxContainer
 
 @onready var step_time_slider = $step_time_slider
 @onready var step_time_label = $step_time_slider/step_time_label
+@onready var tiles = get_tree().get_root().get_node("main/tiles")
 
 func _ready():
 	step_time_slider.max_value = Global.MAX_STEP_TIME
@@ -25,5 +26,9 @@ func _on_toolbar_background_mouse_exited():
 	Global.ABLE_TO_PLACE = true
 
 
-func _on_play_pause_toggled(toggled_on):
+func _on_play_pause_toggled(_toggled_on):
 	Global.playing = !Global.playing
+
+
+func _on_button_pressed():
+	tiles.clear_tiles()

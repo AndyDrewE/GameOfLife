@@ -13,17 +13,7 @@ var is_dragging_mouse = false
 
 
 func _ready():
-	var width_px = width* TILE_SIZE
-	var height_px = height * TILE_SIZE
-	
-	temp_field = []
-	
-	for x in range(width):
-		var temp = []
-		for y in range(height):
-			set_cell(0, Vector2(x,y), 2, Vector2i(0,0))
-			temp.append(0)
-		temp_field.append(temp)
+	clear_tiles()
 
 
 func _input(event):
@@ -43,9 +33,9 @@ func _input(event):
 			
 		
 
-func _process(delta):
-	var inverse_step_time = Global.MAX_STEP_TIME - Global.STEP_TIME + 1
-	if Engine.get_process_frames() % inverse_step_time == 0:
+func _process(_delta):
+	var _inverse_step_time = Global.MAX_STEP_TIME - Global.STEP_TIME + 1
+	if Engine.get_process_frames() % Global.STEP_TIME == 0:
 		update_field()
 
 
@@ -86,3 +76,11 @@ func update_field():
 			set_cell(0, Vector2(x,y), 2, Vector2(temp_field[x][y], 0))
 	
 
+func clear_tiles():
+	temp_field = []
+	for x in range(width):
+		var temp = []
+		for y in range(height):
+			set_cell(0, Vector2(x,y), 2, Vector2i(0,0))
+			temp.append(0)
+		temp_field.append(temp)

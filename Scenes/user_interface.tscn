@@ -56,7 +56,13 @@ mouse_filter = 1
 text = "Play/Pause"
 alignment = 1
 
+[node name="Button" type="Button" parent="toolbar_background/toolbar"]
+layout_mode = 2
+mouse_filter = 1
+text = "Clear"
+
 [connection signal="mouse_entered" from="toolbar_background" to="toolbar_background/toolbar" method="_on_toolbar_background_mouse_entered"]
 [connection signal="mouse_exited" from="toolbar_background" to="toolbar_background/toolbar" method="_on_toolbar_background_mouse_exited"]
 [connection signal="value_changed" from="toolbar_background/toolbar/step_time_slider" to="toolbar_background/toolbar" method="_on_step_time_slider_value_changed"]
 [connection signal="toggled" from="toolbar_background/toolbar/play_pause" to="toolbar_background/toolbar" method="_on_play_pause_toggled"]
+[connection signal="pressed" from="toolbar_background/toolbar/Button" to="toolbar_background/toolbar" method="_on_button_pressed"]
