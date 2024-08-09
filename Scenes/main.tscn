@@ -23,4 +23,9 @@ script = ExtResource("2_a200k")
 width = 120
 height = 67
 
+[node name="step_timer" type="Timer" parent="tiles"]
+autostart = true
+
 [node name="UserInterface" parent="." instance=ExtResource("5_7g0dq")]
+
+[connection signal="timeout" from="tiles/step_timer" to="tiles" method="_on_step_timer_timeout"]

@@ -4,6 +4,8 @@ extends TileMap
 
 const TILE_SIZE = 16
 
+@onready var step_timer = $step_timer
+
 
 @export var width : int
 @export var height : int
@@ -14,12 +16,13 @@ var is_dragging_mouse = false
 
 func _ready():
 	clear_tiles()
+	
 
+func _process(_delta):
+	if step_timer.wait_time != Global.STEP_TIME:
+		step_timer.wait_time = Global.STEP_TIME
 
 func _input(event):
-	if event.is_action_pressed("ui_accept"):
-		Global.playing = !Global.playing
-		
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed and Global.ABLE_TO_PLACE:
@@ -30,13 +33,6 @@ func _input(event):
 	elif event is InputEventMouseMotion:
 		if is_dragging_mouse:
 			place_tile()
-			
-		
-
-func _process(_delta):
-	var _inverse_step_time = Global.MAX_STEP_TIME - Global.STEP_TIME + 1
-	if Engine.get_process_frames() % Global.STEP_TIME == 0:
-		update_field()
 
 
 func place_tile():
@@ -84,3 +80,8 @@ func clear_tiles():
 			set_cell(0, Vector2(x,y), 2, Vector2i(0,0))
 			temp.append(0)
 		temp_field.append(temp)
+
+
+func _on_step_timer_timeout():
+	update_field()
+

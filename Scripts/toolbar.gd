@@ -8,11 +8,12 @@ extends HBoxContainer
 
 func _ready():
 	step_time_slider.max_value = Global.MAX_STEP_TIME
+	step_time_slider.value = Global.STEP_TIME
 	update_step_time_label()
 
 func update_step_time_label():
-	if step_time_label.text != str(step_time_slider.value):
-		step_time_label.text = str(step_time_slider.value)
+	if step_time_label.text != str(step_time_slider.value*100):
+		step_time_label.text = str(step_time_slider.value*100)
 
 func _on_step_time_slider_value_changed(value):
 	Global.STEP_TIME = value
@@ -27,7 +28,7 @@ func _on_toolbar_background_mouse_exited():
 
 
 func _on_play_pause_toggled(_toggled_on):
-	Global.playing = !Global.playing
+	Global.toggle_play()
 
 
 func _on_button_pressed():

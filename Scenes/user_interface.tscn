@@ -34,8 +34,10 @@ layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "Changes Speed of Simulation"
 mouse_filter = 1
-min_value = 1.0
-value = 16.0
+min_value = 0.01
+max_value = 1.5
+step = 0.01
+value = 1.01
 
 [node name="step_time_label" type="Label" parent="toolbar_background/toolbar/step_time_slider"]
 layout_mode = 1
