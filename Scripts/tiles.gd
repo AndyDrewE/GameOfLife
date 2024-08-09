@@ -4,7 +4,6 @@ extends TileMap
 
 const TILE_SIZE = 16
 
-@onready var UserInterface = $UserInterface
 
 var step_time : int = 16
 
@@ -22,11 +21,6 @@ func _ready():
 	var width_px = width* TILE_SIZE
 	var height_px = height * TILE_SIZE
 	
-	var camera = $Camera2D
-	
-	camera.position = Vector2(width_px, height_px)/2
-	camera.zoom = Vector2(width_px,height_px)/Vector2(1920,1080)
-	
 	temp_field = []
 	
 	for x in range(width):
@@ -42,7 +36,7 @@ func _input(event):
 		playing = !playing
 		
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed and able_to_place_tiles:
 			var mouse_pos = (get_local_mouse_position()/TILE_SIZE).floor()
 			var clicked_cell_atlas = get_cell_atlas_coords(0, mouse_pos)
 			clicked_cell_atlas.x = (clicked_cell_atlas.x + 1) % 2
@@ -89,11 +83,3 @@ func update_step_time(new_step_time : int):
 	if step_time != new_step_time:
 		step_time = new_step_time
 
-
-func _on_user_interface_mouse_entered():
-	able_to_place_tiles = false
-
-
-
-func _on_user_interface_mouse_exited():
-	able_to_place_tiles = true

@@ -1,32 +1,35 @@
-[gd_scene load_steps=2 format=3 uid="uid://3njhlba3t2vr"]
+[gd_scene format=3 uid="uid://bsjam3w6nd1m5"]
 
-[ext_resource type="Script" path="res://Scripts/user_interface.gd" id="1_du85t"]
+[node name="UserInterface" type="CanvasLayer"]
+follow_viewport_enabled = true
 
-[node name="UserInterface" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
+[node name="toolbar" type="HBoxContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
+offset_left = -97.5
+offset_top = -40.0
+offset_right = 97.5
 grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("1_du85t")
+grow_vertical = 0
 
-[node name="step_time_slider" type="VSlider" parent="."]
-layout_mode = 0
-offset_left = 935.0
-offset_top = 76.0
-offset_right = 951.0
-offset_bottom = 421.0
-tooltip_text = "Controls speed of simulation"
-min_value = 1.0
+[node name="step_time_slider" type="HSlider" parent="toolbar"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
 value = 16.0
 
-[node name="step_time_slider_label" type="Label" parent="step_time_slider"]
-layout_mode = 0
-offset_left = -2.0
-offset_top = -26.0
-offset_right = 17.0
-offset_bottom = -3.0
+[node name="step_time_label" type="Label" parent="toolbar/step_time_slider"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_right = 19.0
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
 text = "16"
-
-[connection signal="value_changed" from="step_time_slider" to="." method="_on_step_time_slider_value_changed"]
