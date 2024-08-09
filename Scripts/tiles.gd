@@ -8,11 +8,8 @@ const TILE_SIZE = 16
 @export var width : int
 @export var height : int
 
-
-
-
 var temp_field
-
+var is_dragging_mouse = false
 
 
 func _ready():
@@ -34,18 +31,29 @@ func _input(event):
 		Global.playing = !Global.playing
 		
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed and Global.ABLE_TO_PLACE:
-			var mouse_pos = (get_local_mouse_position()/TILE_SIZE).floor()
-			var clicked_cell_atlas = get_cell_atlas_coords(0, mouse_pos)
-			clicked_cell_atlas.x = (clicked_cell_atlas.x + 1) % 2
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed and Global.ABLE_TO_PLACE:
+				is_dragging_mouse = true
+				place_tile()
+			else:
+				is_dragging_mouse = false
+	elif event is InputEventMouseMotion:
+		if is_dragging_mouse:
+			place_tile()
 			
-			set_cell(0, mouse_pos, 2, clicked_cell_atlas)
 		
 
 func _process(delta):
-	if Engine.get_process_frames() % Global.STEP_TIME == 0:
+	var inverse_step_time = Global.MAX_STEP_TIME - Global.STEP_TIME + 1
+	if Engine.get_process_frames() % inverse_step_time == 0:
 		update_field()
 
+
+func place_tile():
+	var mouse_pos = (get_local_mouse_position()/TILE_SIZE).floor()
+	var clicked_cell_atlas = get_cell_atlas_coords(0, mouse_pos)
+	clicked_cell_atlas.x = (clicked_cell_atlas.x + 1) % 2
+	set_cell(0, mouse_pos, 2, clicked_cell_atlas)
 
 func update_field():
 	if !Global.playing:
@@ -76,5 +84,5 @@ func update_field():
 	for x in range(width):
 		for y in range(height):
 			set_cell(0, Vector2(x,y), 2, Vector2(temp_field[x][y], 0))
-
+	
 

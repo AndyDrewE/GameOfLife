@@ -6,6 +6,7 @@ extends HBoxContainer
 @onready var step_time_label = $step_time_slider/step_time_label
 
 func _ready():
+	step_time_slider.max_value = Global.MAX_STEP_TIME
 	update_step_time_label()
 
 func update_step_time_label():
@@ -22,3 +23,7 @@ func _on_toolbar_background_mouse_entered():
 
 func _on_toolbar_background_mouse_exited():
 	Global.ABLE_TO_PLACE = true
+
+
+func _on_play_pause_toggled(toggled_on):
+	Global.playing = !Global.playing
