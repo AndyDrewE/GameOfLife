@@ -12,6 +12,7 @@ const TILE_SIZE = 16
 
 var temp_field
 var is_dragging_mouse = false
+var last_mouse_pos
 
 
 func _ready():
@@ -25,14 +26,16 @@ func _process(_delta):
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
-			if event.pressed and Global.ABLE_TO_PLACE:
+			if event.is_pressed() and Global.ABLE_TO_PLACE:
 				is_dragging_mouse = true
 				place_tile()
 			else:
 				is_dragging_mouse = false
 	elif event is InputEventMouseMotion:
-		if is_dragging_mouse:
+		var current_mouse_pos = (event.position/TILE_SIZE).floor()
+		if is_dragging_mouse and current_mouse_pos != last_mouse_pos:
 			place_tile()
+			last_mouse_pos = current_mouse_pos
 
 
 func place_tile():
