@@ -36,6 +36,10 @@ func _input(event):
 		if is_dragging_mouse and current_mouse_pos != last_mouse_pos:
 			place_tile()
 			last_mouse_pos = current_mouse_pos
+			
+			
+	if Input.is_action_just_pressed("ui_select"):
+		Global.toggle_play()
 
 
 func place_tile():
@@ -55,7 +59,7 @@ func update_field():
 			for x_off in [-1, 0, 1]:
 				for y_off in [-1, 0, 1]:
 					if x_off != y_off or x_off != 0:
-						if get_cell_atlas_coords(0, Vector2(x+x_off,y+y_off)).x == 1:
+						if get_cell_atlas_coords(0, Vector2(posmod((x+x_off),width),posmod((y+y_off),height))).x == 1:
 							live_neighbors += 1
 			
 			if get_cell_atlas_coords(0, Vector2(x,y)).x == 1:
